@@ -1,0 +1,69 @@
+{
+  "name": "multi_os_log_summary",
+  "description": "Summarizes logs from multiple OS types (Windows CBS/CSI, Linux syslog, macOS) into a structured schema format.",
+  "version": "1.0",
+  "input_type": "text",
+  "output_schema": "schema.json",
+  "tasks": [
+    {
+      "task_name": "extract_basic_fields",
+      "description": "Extract timestamp, hostname, OS type, log source, severity level, and raw message from each log entry.",
+      "required_fields": ["timestamp", "os_type", "source", "severity", "message"]
+    },
+    {
+      "task_name": "summarize_log_message",
+      "description": "Generate a concise summary of the log message in plain English.",
+      "output_field": "summary_text"
+    },
+    {
+      "task_name": "classify_log_type",
+      "description": "Determine if the log is informational, warning, error, or critical.",
+      "output_field": "log_level"
+    },
+    {
+      "task_name": "enrich_optional_fields",
+      "description": "Include additional context if available, such as process name, event ID, module, user, or subsystem.",
+      "optional_fields": ["process", "event_id", "module", "user", "subsystem"]
+    },
+    {
+      "task_name": "validate_output",
+      "description": "Ensure the output strictly conforms to schema.json, including field types and required fields."
+    }
+  ],
+  "examples": [
+    {
+      "input": "Windows CBS: 2025-10-21 08:55:01 [Error] Component: PackageManager; Description: Failed to install update KB123456",
+      "output": {
+        "timestamp": "2025-10-21T08:55:01Z",
+        "os_type": "Windows",
+        "source": "CBS",
+        "severity": "Error",
+        "message": "Failed to install update KB123456",
+        "summary_text": "Update KB123456 installation failed in CBS PackageManager.",
+        "log_level": "Error",
+        "process": null,
+        "event_id": null,
+        "module": "PackageManager",
+        "user": null,
+        "subsystem": null
+      }
+    },
+    {
+      "input": "Linux syslog: Oct 21 09:10:45 server1 sshd[1023]: Accepted password for user1 from 192.168.1.10 port 54321 ssh2",
+      "output": {
+        "timestamp": "2025-10-21T09:10:45Z",
+        "os_type": "Linux",
+        "source": "sshd",
+        "severity": "Info",
+        "message": "Accepted password for user1 from 192.168.1.10",
+        "summary_text": "User user1 successfully logged in via SSH from 192.168.1.10.",
+        "log_level": "Info",
+        "process": "sshd",
+        "event_id": null,
+        "module": null,
+        "user": "user1",
+        "subsystem": null
+      }
+    }
+  ]
+}
