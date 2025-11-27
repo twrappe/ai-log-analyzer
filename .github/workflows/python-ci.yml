@@ -35,9 +35,11 @@ jobs:
           name: log_analyzer_wheel
           path: dist/
 
-      - name: Install wheel
+      - name: Install built wheel
+        shell: powershell
         run: |
-          pip install dist/
+            $whl = Get-ChildItem dist\*.whl | Select-Object -First 1
+            pip install $whl.FullName
             
       - name: Install test dependencies
         run: |
