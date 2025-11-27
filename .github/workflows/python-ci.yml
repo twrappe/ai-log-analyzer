@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,7 +33,7 @@ jobs:
           python -m build --wheel --outdir dist
 
       - name: Upload wheel artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: log_analyzer_wheel
           path: dist/*.whl
@@ -51,7 +51,7 @@ jobs:
           pytest test/ --maxfail=1 --disable-warnings -q --html=pytest-report.html --self-contained-html
 
       - name: Upload pytest JSON report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v5
         with:
           name: pytest-report
           path: pytest-report.json
