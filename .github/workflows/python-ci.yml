@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.10, 3.11]
+        python-version: [3.11]
 
     steps:
       - name: Checkout repository
@@ -33,11 +33,11 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: log_analyzer_wheel
-          path: dist/*.whl
+          path: dist/
 
       - name: Install wheel
         run: |
-          pip install dist/*.whl
+          pip install dist/
             
       - name: Install test dependencies
         run: |
