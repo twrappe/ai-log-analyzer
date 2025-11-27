@@ -1,0 +1,4 @@
+# Testing dependencies
+pytest>=8.0.0
+pytest-html>=3.2.0
+

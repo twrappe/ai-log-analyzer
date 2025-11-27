@@ -1,0 +1,22 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=65.0.0", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "log_analyzer"
+version = "0.1.0"
+description = "Python Log Analyzer Library"
+authors = [
+  { name="Your Name", email="twrappe@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "openai",
+  "jsonschema",
+  "scikit-learn"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
